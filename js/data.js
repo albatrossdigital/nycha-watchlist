@@ -23,12 +23,46 @@ function updateData(key) {
   activeKey = key;
 }
 
-// Show data button in map popups
+// Called from the onClick attribute in the show data button in map popups
 function showData() {
   dataActive = true;
-  jQuery('#data').show().animate({'margin-top': '0'}, 0).animate({'margin-top': '-120px'}, 1000);
+  jQuery('#data').show().animate({'margin-top': '-120px'}, 1000);
   drawData(activeKey);
 }
+
+// Data tabs
+jQuery('#nav li a').bind('click', function() {
+  activeTab = jQuery(this).attr('href').replace('#', '');
+  drawData(activeKey);
+  return false;
+});
+
+
+function drawData(key) {
+  activeKey = key;
+
+  if (activeTab == 'pie') {
+    if (jQuery('#pieChart').attr('data-key') !=key) {
+      drawPie(key, 'pieChart');
+    }
+    jQuery('#pieChart').show().attr('data-key', key).makeLoading();
+    jQuery('#dashboard').hide();
+  }
+  else {
+    if (jQuery('#pieChart').attr('data-key') !=key || jQuery('#pieChart').attr('data-tab') != activeTab) {
+      drawTable();
+    }
+    jQuery('#pieChart').hide();
+    jQuery('#dashboard').show().attr('data-key', key).attr('data-tab', activeTab).makeLoading();
+  }
+  jQuery('#nav li').removeClass('active');
+  jQuery('#nav li a[href="#'+activeTab+'"]').parent().addClass('active');
+}
+
+jQuery.fn.makeLoading = function() {
+  jQuery(this).html('Loading...');
+}
+
 
 // Hide data button in the data header
 jQuery('#hideData').bind('click', function() {
@@ -37,16 +71,8 @@ jQuery('#hideData').bind('click', function() {
 })
 
 
-
-function drawData(key) {
-  activeKey = key;
-  drawTable();
-}
-
-
 function drawTable() {
   var key = activeKey;
-  console.log(key);
 
   // Prepare the data                      
   var query = "SELECT * FROM " + dataTable;
@@ -116,7 +142,7 @@ function handleQueryResponse(response) {
     }
   });
 
-  // Define a Pie chart
+  // Define a Table
   var dataChart = new google.visualization.ChartWrapper({
     'chartType': 'Table',
     'containerId': 'tableChart',
@@ -131,7 +157,12 @@ function handleQueryResponse(response) {
                    },
     //'view': {'columns': [0, 1]}
   });
-  console.log(data);
+
+  if (activeTab == 'table') {
+    var viz = dataChart;
+  }
+  
+
 
   // Create a dashboard
   new google.visualization.Dashboard(document.getElementById('data')).
@@ -151,11 +182,12 @@ function drawPie(key, id) {
     query: "SELECT 'REPAIR CATEGORY', COUNT() FROM " + dataTable + " WHERE "+keyCol+" = '" + key + "' GROUP BY 'REPAIR CATEGORY'",
     chartType: 'PieChart',
     options: {
-      title: 'Yearly Coffee Consumption by Country',
-      'width': 600,
-      'height': 300,
-      'legend': 'none',
-      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      title: 'Requests by Category',
+      'width': 900,
+      'height': 600,
+      '3d': true
+      //'legend': 'none'//,
+      //'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
     }
   });
 }

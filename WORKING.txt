@@ -3,10 +3,16 @@
 create database repairs;
 use repairs;
 create table repairs (borough varchar(50), development_name varchar(50), street_address varchar(50), work_order_num varchar(50), repair_category varchar(50), item_detail varchar(50), date_reported varchar(50), days_outstanding varchar(50), state varchar(50), full_address varchar(50));
-LOAD DATA INFILE "/tmp/repairs.csv" INTO TABLE repairs FIELDS TERMINATED BY "," enclosed by '"' (borough, development_name, street_address, work_order_num, repair_category, item_detail, date_reported, days_outstanding, state, full_address);
+LOAD DATA INFILE "/tmp/repairs.csv" INTO TABLE repairs FIELDS TERMINATED BY "," enclosed by '"' (borough, development_name, street_address, work_order_num, repair_category, item_detail, date_reported, days_outstanding);
 
-create table buildings (development_name varchar(50), street_address varchar(50), borough varchar(50), full_address varchar(50), number int(13));
-insert into buildings (development_name, street_address, borough, full_address, number)
-SELECT development_name, street_address, borough, full_address, count(*) FROM `repairs` group by full_address;
+create table buildings (development_name varchar(50), street_address varchar(50), borough varchar(50), full_address varchar(50), total int(13), avg_days float(13));
+insert into buildings (development_name, street_address, borough, full_address, total, avg_days)
+SELECT development_name, street_address, borough, full_address, count(*), SUM(days_outstanding)/count(*)  FROM `repairs` group by development_name;
 
-# Import both tables into Google Fusion tables (use personal Gmail) and geocode
+# Import repairs table into Google Fusion tables (use personal Gmail)
+
+# With buildings
+#   create full_address field by adding state in G and using =CONCATENATE(B2, ", ", C2, ", ", G2)
+#   import into google docs
+#   and geocode the buildings table with https://github.com/mapbox/geo-googledocs
+#   import into Fusion tables

@@ -16,27 +16,32 @@
 
 <body>
 
+<a href="#" class="btn btn-small active" id="pausePlay">Pause/Play</a>
 <div id="map"></div>
 
 <div id="data">
 
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#pie">Request Categories</a></li>
+  <ul class="nav nav-tabs" id="nav">
+    <li class="active"><a href="#pie">Requests by Category</a></li>
     <li><a href="#line">Requests by Days Outstanding</a></li>
-    <li><a href="#table">Line-item List</a></li>
+    <li><a href="#table">Table of all Requests</a></li>
   </ul>
 
   <div class="well">
     <button id="hideData" class="btn btn-small pull-right">Hide Data</button>
     <div id="dataTitle"></div>
 
-    <div class="controls">
-      <div id="categoryControl" class="control"></div>
-      <div id="detailControl" class="control"></div>
-      <div id="daysControl" class="control"></div>
-    </div>
+    <div id="pieChart">Loading...</div>
 
-    <div id="tableChart">Loading...</div>
+    <div id="dashboard">
+      <div class="controls">
+        <div id="categoryControl" class="control"></div>
+        <div id="detailControl" class="control"></div>
+        <div id="daysControl" class="control"></div>
+      </div>
+
+      <div id="tableChart">Loading...</div>
+    </div>
 
   </div>
 
