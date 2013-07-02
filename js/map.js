@@ -51,8 +51,8 @@ fusionTables(mapTable, function(data) {
     for (var i = 0; i < data.rows.length; i++) {
         var entry = data.rows[i];
         var description = '<div class="popupWrapper">'
-            + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+i+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small pull-right" onclick="showData();stopCycle();" id="showData">See Details</button></div>'
-            + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x120&location='+entry[1]+','+entry[2]+'&sensor=false" alt="Google StreetView Image @copy Google" /></div>'
+            + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(i+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small pull-right" onclick="showData();stopCycle();" id="showData">See Details</button></div>'
+            + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+entry[1]+','+entry[2]+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
             + '<div class="item dataItem"><span class="dataTitle">Total Outstanding Requests:</span> <span class="dataValue highlighted">' + entry[5] + '</span></div>'
             + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding:</span> <span class="dataValue">' + parseInt(entry[6]) + '</span></div>'
             + '</div>';
@@ -111,18 +111,17 @@ jQuery('#pausePlay').bind('click', function(){
 
 // Open popup when user mouses over a marker
 function cycle() {
-    var i = 0;
+    var i = -1;
     function run() {
-        if (++i > markers.length - 1) i = 0;
+        if (++i > markers.length - 1) i = -1;
         map.setView(markers[i].getLatLng(), 12);
         markers[i].openPopup();
-        timeout = window.setTimeout(run, 5000);
+        timeout = window.setTimeout(run, 3000);
     }
     run();
 }
 
 function stopCycle() {
-    console.log('stop');
     window.clearTimeout(timeout);
     jQuery('#pausePlay').removeClass('active');
 }
