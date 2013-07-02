@@ -40,7 +40,13 @@ fusionTables(mapTable, function(data) {
     })
     map
         .setView([40.7146, -74.0066], 13)
-        .addControl(L.mapbox.geocoderControl(mapTable));
+        .addControl(L.mapbox.geocoderControl(mapTable))
+        //.on('zoomstart', function(e){
+        //    if (!init) {
+        //       stopCycle(); 
+        //    }
+        //    init = true;
+        //});
 
     for (var i = 0; i < data.rows.length; i++) {
         var entry = data.rows[i];
@@ -116,7 +122,7 @@ function cycle() {
 }
 
 function stopCycle() {
+    console.log('stop');
     window.clearTimeout(timeout);
     jQuery('#pausePlay').removeClass('active');
 }
-

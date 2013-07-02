@@ -42,18 +42,20 @@ function drawData(key) {
   activeKey = key;
 
   if (activeTab == 'pie') {
+    jQuery('#pieChart').show();
     if (jQuery('#pieChart').attr('data-key') !=key) {
+      jQuery('#pieChart').attr('data-key', key).makeLoading();
       drawPie(key, 'pieChart');
     }
-    jQuery('#pieChart').show().attr('data-key', key).makeLoading();
     jQuery('#dashboard').hide();
   }
   else {
+    jQuery('#dashboard').show();
     if (jQuery('#pieChart').attr('data-key') !=key || jQuery('#pieChart').attr('data-tab') != activeTab) {
       drawTable();
     }
     jQuery('#pieChart').hide();
-    jQuery('#dashboard').show().attr('data-key', key).attr('data-tab', activeTab).makeLoading();
+    jQuery('#dashboard').attr('data-key', key).attr('data-tab', activeTab);
   }
   jQuery('#nav li').removeClass('active');
   jQuery('#nav li a[href="#'+activeTab+'"]').parent().addClass('active');
@@ -130,14 +132,13 @@ function handleQueryResponse(response) {
   });
 
   var detailPicker = new google.visualization.ControlWrapper({
-    'controlType': 'CategoryFilter',
+    'controlType': 'StringFilter',
     'containerId': 'detailControl',
     'options': {
       'filterColumnLabel': 'ITEM DETAIL',
       'ui': {
       'labelStacking': 'vertical',
-        'allowTyping': true,
-        'allowMultiple': true
+        'allowTyping': true
       }
     }
   });
@@ -145,27 +146,22 @@ function handleQueryResponse(response) {
   // Define a Table
   var dataChart = new google.visualization.ChartWrapper({
     'chartType': 'Table',
-    'containerId': 'tableChart',
+    'containerId': 'dashboardData',
     'options': {
-          //'height': 630,
-          //'width': window.innerWidth -68,
-          'page': 'enable',
-          'pageSize': 25,
-          'alternatingRowStyle': 'TRUE',
-          'sortColumn': -1,
-          'cssClassNames': {headerRow: 'table-header-background', tableRow: 'table-row', oddTableRow: 'odd-table-row', selectedTableRow: 'google-hover-table-row', hoverTableRow: 'google-hover-table-row', headerCell: 'table-header-background', tableCell: '', rowNumberCell: ''}
-                   },
+      //'height': 630,
+      //'width': window.innerWidth -68,
+      'page': 'enable',
+      'pageSize': 25,
+      'alternatingRowStyle': true,
+      'sortColumn': 7,
+      'sortAscending': false,
+      'cssClassNames': {headerRow: 'table-header-background', tableRow: 'table-row', oddTableRow: 'odd-table-row', selectedTableRow: 'google-hover-table-row', hoverTableRow: 'google-hover-table-row', headerCell: 'table-header-background', tableCell: '', rowNumberCell: ''}
+    },
     //'view': {'columns': [0, 1]}
   });
 
-  if (activeTab == 'table') {
-    var viz = dataChart;
-  }
-  
-
-
   // Create a dashboard
-  new google.visualization.Dashboard(document.getElementById('data')).
+  new google.visualization.Dashboard(document.getElementById('dashboard')).
     bind(daysPicker, dataChart).
     bind(categoryPicker, dataChart).
     bind(detailPicker, dataChart).
@@ -185,9 +181,8 @@ function drawPie(key, id) {
       title: 'Requests by Category',
       'width': 900,
       'height': 600,
-      '3d': true
       //'legend': 'none'//,
-      //'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0}
     }
   });
 }
