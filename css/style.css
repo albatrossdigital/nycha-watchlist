@@ -77,7 +77,7 @@ h2 {
   margin: 0 auto;
 }
 
-#data #pieChart rect {
+#data #pieChart svg>rect {
   fill: none !important;
   
 }

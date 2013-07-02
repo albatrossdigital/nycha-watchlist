@@ -181,8 +181,9 @@ function drawPie(key, id) {
       title: 'Requests by Category',
       'width': 900,
       'height': 600,
-      //'legend': 'none'//,
-      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0}
+      'is3D': true,
+      'tooltip': {showColorCode: true},
+      chartArea: {left:20, top:0, width:"100%",height:"100%"}
     }
   });
 }
