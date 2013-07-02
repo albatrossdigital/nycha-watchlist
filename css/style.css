@@ -1,0 +1,122 @@
+#map,
+body,
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #364350;
+}
+
+h2 {
+  font-size: 1.4em;
+  line-height: 1em;
+  margin-bottom: .4em;
+  color: #364350;
+}
+
+
+#data {
+  display: none;
+  z-index: 1000;
+  margin: 0 15px 15px 15px;
+  min-height: 300px;
+}
+
+#data #dataTitle h2 {
+  font-size: 1.4em;
+}
+
+#data .nav {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+#data .nav-tabs a {
+  font-weight: bold;
+  color: #ff7d37;
+}
+
+#data .nav-tabs a {
+  font-weight: bold;
+  color: #ff7d37;
+  text-shadow: 1px 1px 3px #3D3D3D;
+}
+
+#data .nav-tabs .active a {
+  color: #000;
+  text-shadow: none;
+}
+
+#data .controls {
+  
+}
+
+#data .controls .control {
+  float: left;
+  margin-right: 2em;
+  margin-bottom: 1em;
+}
+
+#data #tableChart {
+  clear: both;
+}
+
+#data #tableChart .table-header-background td {
+  background-color: #364350;
+  color: #fff;
+  border-left: 1px solid #5E5E5E;
+  padding-left: 4px;
+}
+
+
+
+.leaflet-popup-content {
+  width: 360px !important;
+}
+
+.leaflet-popup-content,
+.popupWrapper h2 {
+  margin: 0;
+}
+
+.popupWrapper {
+  font-size: 1.2em;
+}
+
+.popupWrapper .item {
+  border-bottom: 2px solid #d7d7d7;
+  padding: 15px 1em 0;
+}
+
+.popupWrapper .dataItem {
+  height: 45px;
+}
+
+.popupWrapper .addressWrapper {
+  background-color: #EBEBEB;
+  color: #364350;
+  padding-bottom: 15px;
+}
+
+.popupWrapper .daysWrapper {
+  border-bottom: none;
+}
+
+.popupWrapper .dataTitle {
+  color: #A5A5A5;
+  float: left;
+  width: 120px;
+  display: block;
+  padding-left: 10px;
+}
+
+.popupWrapper .dataValue {
+  font-weight: bold;
+  font-size: 2.2em;
+  line-height: 1em;
+}
+
+.popupWrapper .dataValue.highlighted {
+  color: #FE7E38;
+}
