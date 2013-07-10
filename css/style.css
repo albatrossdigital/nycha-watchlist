@@ -1,11 +1,99 @@
-#map,
 body,
 html {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #364350;
 }
 
-body {
+#header {
+  height: 60px;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+}
+
+#header #borough-tabs {
+  margin-bottom: 0;
+  position: absolute;
+  top: 13px;
+  right: 5px;
+}
+
+#header #borough-tabs li a:active,
+#header #borough-tabs li a.active {
   background-color: #364350;
+  border-color: #364350;
+  color: #fff;
+}
+
+#right-bar {
+  width: 300px;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  overflow: hidden;
+  color: #fff;
+  z-index: 10;
+}
+
+#right-bar .header {
+  background-color: #2B353F;
+}
+
+#right-bar  h2{
+  padding: .75em 0;
+  text-align: center;
+  color: #fff;
+}
+
+#right-bar  #building-list {
+  background-color: #364350;
+  opacity: .9;
+  -moz-opacity: .9;
+}
+
+#right-bar  #building-list .item {
+  padding: .75em 5px .75em 100px;
+  cursor: hand; 
+  cursor: pointer;
+}
+
+#right-bar  #building-list .highlighted {
+  margin-left: -85px;
+  font-size: 1.7em;
+  font-weight: bold;
+  color: #FE7E38;
+  position: absolute;
+  margin-top: 5px;
+}
+
+#right-bar  #building-list .item.active {
+  background-color: #FE7E38;
+}
+
+#right-bar  #building-list .item.active .highlighted {
+  color: #fff;
+}
+
+
+#right-bar #play-controls {
+  text-align: center;
+  padding: 10px 0;
+  margin: 0;
+}
+
+#map {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  z-index: 0;
 }
 
 h2 {
@@ -14,22 +102,15 @@ h2 {
   padding-bottom: .2em;
   margin: 0;
   color: #364350;
+  text-transform: uppercase;
 }
-
-#pausePlay {
-  z-index: 1000;
-  position: absolute;
-  top: 100px;
-  left: 10px;
-  background-color: #fff;
-}
-
 
 #data {
   display: none;
   z-index: 1000;
   margin: 0 15px 15px 15px;
   position: relative;
+  margin-top: 100%;
 }
 
 #data .well {
@@ -38,6 +119,11 @@ h2 {
 
 #data #dataTitle h2 {
   font-size: 1.4em;
+}
+
+#data #dataTitle h2 span {
+  font-size: .9em;
+  font-weight: normal;
 }
 
 #data .nav {
@@ -72,14 +158,18 @@ h2 {
   margin-bottom: 1em;
 }
 
-#data #pieChart {
-  width: 900px;
-  margin: 0 auto;
+#data .pieCharts svg>rect {
+  fill: none !important;
 }
 
-#data #pieChart svg>rect {
-  fill: none !important;
-  
+#data .pieCharts {
+  position: relative;
+}
+
+#data #pieChart2 {
+  position: absolute;
+  top: 0;
+  left: 400px;
 }
 
 

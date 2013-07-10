@@ -16,7 +16,32 @@
 
 <body>
 
-<a href="#" class="btn btn-small active" id="pausePlay">Pause/Play</a>
+<div id="header">
+  <h1 class="pull-left">NYCHA Housing Data</h1>
+  <ul class="nav nav-pills" id="borough-tabs">
+    <li><a href="#">All buildings</a></li>
+    <li><a href="#Bronx">Bronx</a></li>
+    <li><a href="#Brooklyn">Brooklyn</a></li>
+    <li><a href="#Manhattan">Manhattan</a></li>
+    <li><a href="#Queens">Queens</a></li>
+    <li><a href="#Staten Island">Staten Island</a></li>
+  </ul>
+</div>
+
+<div id="right-bar">
+  <div class="header">
+    <div class="pagination" id="play-controls">
+      <ul>
+        <li><a href="#" id="prev">Prev</a></li>
+        <li><a href="#" id="playPause">Play/Pause</a></li>
+        <li><a href="#" id="next">Next</a></li>
+      </ul>
+    </div>
+    <h2>Buildings with the most requests in <span id="right-bar-location">NYC</span></h2>
+  </div>
+  <div id="building-list"></div>
+</div>
+
 <div id="map"></div>
 
 <div id="data">
@@ -31,7 +56,10 @@
     <button id="hideData" class="btn btn-small pull-right">Hide Data</button>
     <div id="dataTitle"></div>
 
-    <div id="pieChart">Loading...</div>
+    <div class="pieCharts">
+      <div id="pieChart1">Loading...</div>
+      <div id="pieChart2"></div>
+    </div>
 
     <div id="dashboard">
       <div class="controls">
@@ -48,6 +76,7 @@
 
 <script src='js/map.js'></script>
 <script src='js/data.js'></script>
+<script src='js/general.js'></script>
 
 </body>
 </html>

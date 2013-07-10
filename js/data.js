@@ -4,6 +4,8 @@ var dataTable = '1Xvmrj3MwiK9BSZMdsSBz3kRYpcFtT1NkdoR4CpY';
 // This is the Fusion Tables column that all of the lookups from the map are keyed on
 var keyCol = "'DEVELOPMENT NAME'"
 
+var vizColors = ['#394553', '#acacac', '#4aa6d7', '#c5dffa', '#ff792f', '#fdc689', '#7cc576', '#fff568', '#9476c5', '#f8b3d1'];
+
 
 google.load('visualization', '1', { packages: ['table', 'controls'] });
 
@@ -15,18 +17,19 @@ var activeKey = '';
 var googLoaded = false;
 
 // This is called from map.js when a marker is clicked
-function updateData(key) {
+function updateData(key, address) {
   if (dataActive) {
     drawData(key);
   }
-  jQuery('#dataTitle').html('<h2>REQUEST DETAILS FOR '+key+'</h2>');
+  jQuery('#dataTitle').html('<h2>REQUEST DETAILS FOR '+key+'<span>, '+address+'</span></h2>');
   activeKey = key;
 }
 
 // Called from the onClick attribute in the show data button in map popups
 function showData() {
   dataActive = true;
-  jQuery('#data').show().animate({'margin-top': '-120px'}, 1000);
+  var height = $(window).height();
+  jQuery('#data').css('margin-top', height+'px').show().animate({'margin-top': Math.round(height*.65) +'px'}, 1000);
   drawData(activeKey);
 }
 
@@ -42,19 +45,19 @@ function drawData(key) {
   activeKey = key;
 
   if (activeTab == 'pie') {
-    jQuery('#pieChart').show();
-    if (jQuery('#pieChart').attr('data-key') !=key) {
-      jQuery('#pieChart').attr('data-key', key).makeLoading();
-      drawPie(key, 'pieChart');
+    jQuery('#pieChart1, #pieChart2').show();
+    if (jQuery('#pieChart1, #pieChart2').attr('data-key') !=key) {
+      jQuery('#pieChart1, #pieChart2').attr('data-key', key).makeLoading();
+      drawPie(key);
     }
     jQuery('#dashboard').hide();
   }
   else {
     jQuery('#dashboard').show();
-    if (jQuery('#pieChart').attr('data-key') !=key || jQuery('#pieChart').attr('data-tab') != activeTab) {
+    if (jQuery('#pieChart1, #pieChart2').attr('data-key') !=key || jQuery('#pieChart1, #pieChart2').attr('data-tab') != activeTab) {
       drawTable();
     }
-    jQuery('#pieChart').hide();
+    jQuery('#pieChart1, #pieChart2').hide();
     jQuery('#dashboard').attr('data-key', key).attr('data-tab', activeTab);
   }
   jQuery('#nav li').removeClass('active');
@@ -69,7 +72,7 @@ jQuery.fn.makeLoading = function() {
 // Hide data button in the data header
 jQuery('#hideData').bind('click', function() {
   dataActive = false;
-  jQuery('#data').animate({'margin-top': '0'}, 1000).fadeOut();
+  jQuery('#data').animate({'margin-top': $(window).height()+'px'}, 1000).fadeOut();
 })
 
 
@@ -82,14 +85,12 @@ function drawTable() {
   if (key != undefined) {
     query += " WHERE "+keyCol+" = '" + key + "'";
   }
-  console.log(query);
 
   var queryText = encodeURIComponent(query);
   var gvizQuery = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq=' + queryText);
   // Apply query language statement.
   //query.setQuery("SELECT A, B, D, G, H, I, J, L");
   // Send the query with a callback function.
-  console.log(gvizQuery);
   gvizQuery.send(handleQueryResponse);
 }
 
@@ -171,21 +172,64 @@ function handleQueryResponse(response) {
 
 
 
-function drawPie(key, id) {
-  google.visualization.drawChart({
-    containerId: id,
-    dataSourceUrl: 'http://www.google.com/fusiontables/gvizdata?tq=',
-    query: "SELECT 'REPAIR CATEGORY', COUNT() FROM " + dataTable + " WHERE "+keyCol+" = '" + key + "' GROUP BY 'REPAIR CATEGORY'",
-    chartType: 'PieChart',
-    options: {
-      title: 'Requests by Category',
-      'width': 900,
-      'height': 600,
-      'is3D': true,
-      'tooltip': {showColorCode: true},
-      chartArea: {left:20, top:0, width:"100%",height:"100%"}
-    }
+function drawPie(keyValue) {
+  console.log('draw');
+
+  function response(x) {
+    if (!x || !x.rows) return [];
+    var category = [];
+    var outstanding = [];
+
+    _.each(x.rows, function(value) {
+      category.push([value[0], parseInt(value[1])]);
+      outstanding.push([value[0], parseInt(value[2]/value[1])]);
+    });
+
+    google.visualization.drawChart({
+      containerId: 'pieChart1',
+      dataTable: category,
+      chartType: 'PieChart',
+      options: {
+        title: 'Oustanding Requests by Category',
+        'width': 350,
+        'height': 400,
+        'is3D': true,
+        'tooltip': {showColorCode: true},
+        legend: {position: 'none'},
+        chartArea: {width:"80%",height:"80%"},
+        colors: vizColors
+      }
+    });
+
+    google.visualization.drawChart({
+      containerId: 'pieChart2',
+      dataTable: outstanding,
+      chartType: 'PieChart',
+      options: {
+        title: 'Average Days Outstanding per Category',
+        'width': 550,
+        'height': 400,
+        'is3D': true,
+        'tooltip': {showColorCode: true},
+        pieSliceText: 'value',
+        chartArea: {width:"80%",height:"80%"},
+        colors: vizColors
+      }
+    });
+
+  }
+  // enter  enter your google fusion tables api key below
+  var query = "SELECT 'REPAIR CATEGORY', COUNT(), SUM('DAYS OUTSTANDING') FROM " + dataTable + " WHERE "+keyCol+" = '" + keyValue + "' GROUP BY 'REPAIR CATEGORY'";
+  var url = 'https://www.googleapis.com/fusiontables/v1/query?sql='+encodeURIComponent(query)+'&key=' + key + '&typed=false&callback=jsonp';
+
+  $.ajax({
+    url: url,
+    dataType: 'jsonp',
+    jsonpCallback: 'jsonp',
+    success: response,
+    error: response
   });
+
 }
 
 
