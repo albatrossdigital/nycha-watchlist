@@ -299,6 +299,11 @@ h2 {
 /* Responsive mobile-only tweaks */
 @media (max-width: 600px) {
 
+  #header img {
+    max-width: 100%;
+    height: auto;
+  }
+
   #right-bar,
   #borough-tabs,
   .leaflet-control-geosearch {
