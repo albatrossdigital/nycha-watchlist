@@ -12,7 +12,7 @@ var map, timeout, data;
 var markers = [];
 var playing = true;
 var currentMarker = 0;
-
+setView = false;
 
 
 function fusionTables(id, callback) {
@@ -47,7 +47,7 @@ var drawMarkers = function(newData) {
     if (activeBorough == undefined || activeBorough == 'All' || activeBorough == '' || activeBorough == entry[4]) {
       var description = '<div class="popupWrapper" onclick="showData();stopCycle();">'
         + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(j+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small pull-right" id="showData">See Details</button></div>'
-        + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+entry[1]+','+entry[2]+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
+        + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+encodeURIComponent(entry[3]+','+entry[4])+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
         + '<div class="item dataItem"><span class="dataTitle">Total Outstanding Requests:</span> <span class="dataValue highlighted">' + entry[5] + '</span></div>'
         + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding:</span> <span class="dataValue">' + parseInt(entry[6]) + '</span></div>'
         + '</div>';
@@ -100,7 +100,8 @@ var drawMarkers = function(newData) {
         var stripe = (Math.round(j/2) == j/2) ? 'even' : 'odd';
         $('<div class="item addressWrapper '+ stripe +'" id="building-'+ j +'"><div class="ranking pull-left dataValue highlighted">'+entry[5]+'</div><strong>'+entry[0]+'</strong><br/>'+entry[3]+'<br/>'+entry[4]).appendTo('#building-list');
         jQuery('#building-list .item').bind('click', function() {
-          markers[parseInt(jQuery(this).attr('id').replace('building-', ''))].openPopup();
+          currentMarker = parseInt(jQuery(this).attr('id').replace('building-', ''));
+          showMarker();
           stopCycle();
           return false;
         })
@@ -112,22 +113,34 @@ var drawMarkers = function(newData) {
 
   currentMarker = 0;
   nextMarker(0);
+  setView = true;
+  jQuery('#map').animate({opacity: 1}, 'slow');
 };
 
 
 // Draw the map and markers
-map = L.mapbox.map('map', mapId, {
+this.map = L.mapbox.map('map', mapId, {
     scrollWheelZoom: false
   })
-map
-  .setView([40.7146, -74.0066], 13)
-  .addControl(L.mapbox.geocoderControl(mapTable))
-  //.on('zoomstart', function(e){
-  //  if (!init) {
-  //     stopCycle(); 
-  //  }
-  //  init = true;
-  //});
+this.map
+  .setView([40.79054951505782, -73.85164260864258], 12)
+  .addControl(L.mapbox.shareControl());
+
+// Add the geosearch control
+new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.Google(),
+    zoomLevel: 15,
+    searchLabel: 'Find buildings near you. Enter your address or zipcode.'
+}).addTo(map);
+
+// Add the locate button
+jQuery('<button class="btn" id="geocode" onclick="locateUser();"><span class="icon-map-marker"></span>Get my location</button>').appendTo('#map .leaflet-top.leaflet-center');
+function locateUser() {
+  this.map.locate({setView: true});
+}
+
+// Make it faded out until the data arrives
+jQuery().css({opacity: .1});
 
 
 jQuery('#playPause').bind('click', function(){
@@ -166,10 +179,17 @@ function cycle() {
 }
 
 function nextMarker(direction) {
+  console.log(setView);
   currentMarker += direction;
   if (currentMarker > markers.length - 1) currentMarker = 0;
   if (currentMarker < 0) currentMarker = markers.length - 1;
-  map.setView(markers[currentMarker].getLatLng(), 12);
+  showMarker();
+}
+
+function showMarker() {
+  if (setView == undefined || setView != false) {
+    map.setView(markers[currentMarker].getLatLng(), 14);
+  }
   markers[currentMarker].openPopup();
 }
 

@@ -47,7 +47,8 @@ function drawData(key) {
   if (activeTab == 'pie') {
     jQuery('#pieChart1, #pieChart2').show();
     if (jQuery('#pieChart1, #pieChart2').attr('data-key') !=key) {
-      jQuery('#pieChart1, #pieChart2').attr('data-key', key).makeLoading();
+      jQuery('#pieChart1, #pieChart2').attr('data-key', key);
+      jQuery('#pieChart1').makeLoading();
       drawPie(key);
     }
     jQuery('#dashboard').hide();

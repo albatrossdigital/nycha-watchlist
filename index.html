@@ -3,13 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-  <title>NYC Work Order Requests</title>
+  <title>NYCHA Watchlist - Tracking repairs in New York City public housing</title>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
 <script src='http://api.tiles.mapbox.com/mapbox.js/v1.1.0/mapbox.js'></script>
 <script src='http://underscorejs.org/underscore-min.js'></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="assets/L.GeoSearch/src/js/l.control.geosearch.js"></script>
+<script src="assets/L.GeoSearch/src/js/l.geosearch.provider.google.js"></script>
 <link href='http://api.tiles.mapbox.com/mapbox.js/v1.1.0/mapbox.css' rel='stylesheet' />
+<link href='assets/L.GeoSearch/src/css/l.geosearch.css' rel='stylesheet' />
+<link href='assets/icomoon/style.css' rel='stylesheet' />
   <link href='css/bootstrap.css' rel='stylesheet' />
   <link href='css/style.css' rel='stylesheet' />
 </head>
@@ -17,7 +21,7 @@
 <body>
 
 <div id="header">
-  <h1 class="pull-left">NYCHA Housing Data</h1>
+  <h1 class="pull-left"><img src="images/logo.png" width="397" height="60" alt="NYCHA Watchlist - Tracking repairs in New York City public housing" ></h1>
   <ul class="nav nav-pills" id="borough-tabs">
     <li><a href="#">All buildings</a></li>
     <li><a href="#Bronx">Bronx</a></li>
@@ -32,9 +36,9 @@
   <div class="header">
     <div class="pagination" id="play-controls">
       <ul>
-        <li><a href="#" id="prev">Prev</a></li>
-        <li><a href="#" id="playPause">Play/Pause</a></li>
-        <li><a href="#" id="next">Next</a></li>
+        <li><a href="#" id="prev" class=""><span class="icon-chevron-left"></span></a></li>
+        <li><a href="#" id="playPause"><span class="icon-play"></span></a></li>
+        <li><a href="#" id="next"><span class="icon-chevron-right"></span></a></li>
       </ul>
     </div>
     <h2>Buildings with the most requests in <span id="right-bar-location">NYC</span></h2>

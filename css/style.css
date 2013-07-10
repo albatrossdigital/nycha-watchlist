@@ -7,16 +7,20 @@ html {
 }
 
 #header {
-  height: 60px;
+  height: 70px;
   overflow: hidden;
   position: relative;
   background-color: #fff;
 }
 
+#header h1 {
+  margin: 5px;
+}
+
 #header #borough-tabs {
   margin-bottom: 0;
   position: absolute;
-  top: 13px;
+  top: 18px;
   right: 5px;
 }
 
@@ -30,7 +34,7 @@ html {
 #right-bar {
   width: 300px;
   position: absolute;
-  top: 60px;
+  top: 70px;
   right: 0;
   bottom: 0;
   height: auto;
@@ -53,6 +57,7 @@ html {
   background-color: #364350;
   opacity: .9;
   -moz-opacity: .9;
+  height: 100%;
 }
 
 #right-bar  #building-list .item {
@@ -85,9 +90,18 @@ html {
   margin: 0;
 }
 
+#right-bar #play-controls a.active {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+#right-bar #play-controls a.active span:before {
+  content: "\e001";
+}
+
 #map {
   position: absolute;
-  top: 60px;
+  top: 70px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -95,6 +109,34 @@ html {
   height: auto;
   z-index: 0;
 }
+
+.leaflet-center {
+  padding-right: 300px;
+  width: 50%;
+  max-width: 900px;
+}
+
+#map .leaflet-control-geosearch {
+  width: 70%;
+}
+
+#map .leaflet-control-geosearch input {
+  margin: 0;
+}
+
+#map #geocode {
+  position: relative;
+  z-index: 7;
+  pointer-events: auto;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+#map .mapbox-share-popup textarea {
+  width: 90%;
+}
+
+
 
 h2 {
   font-size: 1.4em;
@@ -250,4 +292,49 @@ h2 {
 
 .popupWrapper .dataValue.highlighted {
   color: #FE7E38;
+}
+
+
+
+/* Responsive mobile-only tweaks */
+@media (max-width: 600px) {
+
+  #right-bar,
+  #borough-tabs,
+  .leaflet-control-geosearch {
+    display: none;
+  }
+
+  .leaflet-popup-content {
+    width: 300px !important;
+  }
+
+  .popupWrapper .dataItem {
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  .popupWrapper .dataTitle {
+    font-size: .8em;
+    line-height: 1.2em;
+  }
+
+  .popupWrapper .dataValue {
+    font-size: 1.5em;
+    display: block;
+    margin-left: 10px;
+    float: left;
+    margin-top: 3px;
+  }
+
+  .leaflet-center {
+    width: 40%;
+    padding-right: 0;
+  }
+
+  #data #pieChart2 {
+    position: relative;
+    left: 0;
+    width: 300px;
+  }
 }
