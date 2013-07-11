@@ -53,11 +53,25 @@ html {
   color: #fff;
 }
 
-#right-bar  #building-list {
+#right-bar .building-list-heading {
+  height: 1.5em;
+}
+
+#right-bar .building-list-heading span{
+  margin-left: 10px;
+  font-weight: bold;
+  color: #A5A5A6;
+  width: 80px;
+  display: block;
+  float: left;
+}
+
+#right-bar #building-list {
   background-color: #364350;
   opacity: .9;
   -moz-opacity: .9;
   height: 100%;
+  clear: both;
 }
 
 #right-bar  #building-list .item {
@@ -226,6 +240,10 @@ h2 {
   padding-left: 4px;
 }
 
+
+
+
+/* map poups */
 .leaflet-popup-content {
   width: 360px !important;
 }
@@ -265,6 +283,21 @@ h2 {
 .popupWrapper .addressWrapper .ranking span{
   font-size: .5em;
 }
+
+.popupWrapper .addressWrapper #showData{
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #364350;
+  background-image: -moz-linear-gradient(bottom,#2B353F,#364350);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#364350),to(#2B353F));
+  background-image: -webkit-linear-gradient(bottom,#2B353F,#364350);
+  background-image: -o-linear-gradient(bottom,#2B353F,#364350);
+  background-image: linear-gradient(to bottom,#2B353F,#364350);
+  background-repeat: repeat-x;
+  border-color: #2B353F #2B353F #364350;
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+}
+
 
 
 .popupWrapper .imageWrapper {

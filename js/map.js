@@ -46,7 +46,7 @@ var drawMarkers = function(newData) {
     var entry = data.rows[i];
     if (activeBorough == undefined || activeBorough == 'All' || activeBorough == '' || activeBorough == entry[4]) {
       var description = '<div class="popupWrapper" onclick="showData();stopCycle();">'
-        + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(j+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small pull-right" id="showData">See Details</button></div>'
+        + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(j+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small btn-primary pull-right" id="showData">See Details</button></div>'
         + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+encodeURIComponent(entry[3]+','+entry[4])+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
         + '<div class="item dataItem"><span class="dataTitle">Total Outstanding Requests:</span> <span class="dataValue highlighted">' + entry[5] + '</span></div>'
         + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding:</span> <span class="dataValue">' + parseInt(entry[6]) + '</span></div>'

@@ -4,7 +4,7 @@ var dataTable = '1Xvmrj3MwiK9BSZMdsSBz3kRYpcFtT1NkdoR4CpY';
 // This is the Fusion Tables column that all of the lookups from the map are keyed on
 var keyCol = "'DEVELOPMENT NAME'"
 
-var vizColors = ['#394553', '#acacac', '#4aa6d7', '#c5dffa', '#ff792f', '#fdc689', '#7cc576', '#fff568', '#9476c5', '#f8b3d1'];
+var vizColors = ['#394553', '#acacac', '#4aa6d7', '#c5dffa', '#ff792f', '#fdc689', '#7cc576', '#9476c5', '#f8b3d1'];
 
 
 google.load('visualization', '1', { packages: ['table', 'controls'] });
@@ -178,12 +178,13 @@ function drawPie(keyValue) {
 
   function response(x) {
     if (!x || !x.rows) return [];
-    var category = [];
-    var outstanding = [];
+    var category = [['', '']];
+    var outstanding = [['Category'], ['']];
 
     _.each(x.rows, function(value) {
       category.push([value[0], parseInt(value[1])]);
-      outstanding.push([value[0], parseInt(value[2]/value[1])]);
+      outstanding[0].push(value[0]);
+      outstanding[1].push(parseInt(value[2]/value[1]));
     });
 
     google.visualization.drawChart({
@@ -201,19 +202,21 @@ function drawPie(keyValue) {
         colors: vizColors
       }
     });
-
+console.log(outstanding);
     google.visualization.drawChart({
       containerId: 'pieChart2',
       dataTable: outstanding,
-      chartType: 'PieChart',
+      chartType: 'BarChart',
       options: {
         title: 'Average Days Outstanding per Category',
-        'width': 550,
+        'width': 650,
         'height': 400,
         'is3D': true,
         'tooltip': {showColorCode: true},
         pieSliceText: 'value',
-        chartArea: {width:"80%",height:"80%"},
+        vAxis: {title: "Category"},
+        hAxis: {title: "Average Days Outstanding"},
+        chartArea: {width:"50%"},
         colors: vizColors
       }
     });
