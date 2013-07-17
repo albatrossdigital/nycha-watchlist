@@ -192,8 +192,11 @@ html {
 }
 
 .leaflet-bottom.leaflet-right {
-  left: 0;
-  right: auto;
+  right: 300px;
+}
+
+.leaflet-control-attribution span {
+  font-weight: bold;
 }
 
 
@@ -467,6 +470,10 @@ h2 {
     position: relative;
     left: 0;
     width: 300px;
+  }
+
+  .leaflet-bottom.leaflet-right {
+    right: 0;
   }
 }
 

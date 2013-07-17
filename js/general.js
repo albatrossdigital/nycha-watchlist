@@ -28,6 +28,9 @@ function setActiveBorough(borough) {
   fusionTables(mapTable, drawMarkers);
 }
 
+// Add AD attribution
+jQuery('<span>Built by <a href="http://albatrossdigital.com" title="Albatross Digital">Albatross Digital</a> | </span>').prependTo('.leaflet-control-attribution')
+
 // Responsive media queries for mobile menu
 var queries = [
 {
