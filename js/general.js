@@ -22,7 +22,8 @@ function setActiveBorough(borough) {
     markers[index] = undefined;
   });
   markers = [];
-  var title = (activeBorough == '') ? 'NYC' : (activeBorough == 'BRONX') ? 'THE BRONX' : activeBorough;
+  var title = (activeBorough == '') ? "NYC" : (activeBorough == 'BRONX') ? 'THE BRONX' : activeBorough;
+  title = (title == 'QUEENS') ? title + "'" : title + "'s";
   jQuery('#right-bar-location').text(title);
   fusionTables(mapTable, drawMarkers);
   

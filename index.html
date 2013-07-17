@@ -21,7 +21,14 @@
 <body>
 
 <div id="header">
-  <h1 class="pull-left"><img src="images/logo.png" width="725" height="60" alt="NYCHA Watchlist - Tracking repairs in New York City public housing" ></h1>
+  <h1 class="pull-left"><img src="images/logo.png" width="325" height="60" alt="NYCHA Watchlist - Tracking repairs in New York City public housing" ></h1>
+  
+  <div class="outside-links">
+    <a href="http://advocate.nyc.gov/NYCHA/about">ABOUT THE WATCHLIST</a> |
+    <a href="http://advocate.nyc.gov/NYCHA/FAQ">FAQs ON REPAIRS</a> |
+    <a href="http://advocate.nyc.gov/NYCHA/help">GET HELP WITH REPAIRS</a>
+  </div>
+
   <ul class="nav nav-pills" id="borough-tabs">
     <li><a href="#">All buildings</a></li>
     <li><a href="#Bronx">Bronx</a></li>
@@ -41,9 +48,9 @@
         <li><a href="#" id="next"><span class="icon-chevron-right"></span></a></li>
       </ul>
     </div>
-    <h2>Buildings with the most requests in <span id="right-bar-location">NYC</span></h2>
+    <h2><span id="right-bar-location">NYC's</span> Most Neglected Housing Developments</h2>
     <div class="building-list-heading">
-      <span class="value">Requests</span><span>Address</span>
+      <span class="value">Repairs</span><span>Address</span>
     </div>
   </div>
   <div id="building-list"></div>
@@ -51,12 +58,14 @@
 
 <div id="map"></div>
 
+<a href="http://advocate.nyc.gov" class="deblasio-logo"><img src="images/deblasio-logo.png" width="345" height="52" /></a>
+
 <div id="data">
 
   <ul class="nav nav-tabs" id="nav">
-    <li class="active"><a href="#pie">Requests by Category</a></li>
+    <li class="active"><a href="#pie">Repairs by Category</a></li>
     <!--<li><a href="#line">Requests by Days Outstanding</a></li>-->
-    <li><a href="#table">Table of all Requests</a></li>
+    <li><a href="#table">Table of all Repairs</a></li>
   </ul>
 
   <div class="well">
