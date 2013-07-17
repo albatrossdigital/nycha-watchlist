@@ -1,5 +1,5 @@
 // Fusion Tables table id
-var dataTable = '1Xvmrj3MwiK9BSZMdsSBz3kRYpcFtT1NkdoR4CpY';
+var dataTable = '11oQHFLEPdtG3ibEaHJM_wrCO6OHSTeg0x5lH0FA';
 
 // This is the Fusion Tables column that all of the lookups from the map are keyed on
 var keyCol = "'DEVELOPMENT NAME'"
@@ -49,6 +49,7 @@ function drawData(key) {
     if (jQuery('#pieChart1, #pieChart2').attr('data-key') !=key) {
       jQuery('#pieChart1, #pieChart2').attr('data-key', key);
       jQuery('#pieChart1').makeLoading();
+      jQuery('#pieChart2').html('');
       drawPie(key);
     }
     jQuery('#dashboard').hide();
@@ -177,6 +178,7 @@ function drawPie(keyValue) {
   console.log('draw');
 
   function response(x) {
+    console.log(x);
     if (!x || !x.rows) return [];
     var category = [['', '']];
     var outstanding = [['Category'], ['']];
@@ -202,7 +204,6 @@ function drawPie(keyValue) {
         colors: vizColors
       }
     });
-console.log(outstanding);
     google.visualization.drawChart({
       containerId: 'pieChart2',
       dataTable: outstanding,
@@ -224,10 +225,12 @@ console.log(outstanding);
   }
   // enter  enter your google fusion tables api key below
   var query = "SELECT 'REPAIR CATEGORY', COUNT(), SUM('DAYS OUTSTANDING') FROM " + dataTable + " WHERE "+keyCol+" = '" + keyValue + "' GROUP BY 'REPAIR CATEGORY'";
-  var url = 'https://www.googleapis.com/fusiontables/v1/query?sql='+encodeURIComponent(query)+'&key=' + key + '&typed=false&callback=jsonp';
+  var url = 'https://www.googleapis.com/fusiontables/v1/query';
+  var data = {'key': key, 'sql': query};
 
   $.ajax({
     url: url,
+    data: data,
     dataType: 'jsonp',
     jsonpCallback: 'jsonp',
     success: response,

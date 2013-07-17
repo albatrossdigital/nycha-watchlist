@@ -1,9 +1,18 @@
+html {
+  font-family: desktop;
+}
+
 body,
 html {
   height: 100%;
   margin: 0;
   padding: 0;
   background-color: #364350;
+}
+
+.borough-tabs-title,
+#show-menu {
+  display: none;
 }
 
 #header {
@@ -17,28 +26,39 @@ html {
   margin: 10px;
 }
 
-#header .outside-links {
+#header .outside-links.nav-pills {
   top: 5px;
-  right: 17px;
+  right: 5px;
   position: absolute;
   color: #ccc;
   font-weight: bold;
   font-size: .95em;
 }
 
-#header .outside-links a {
-  color: #364350;
+#header .outside-links.nav-pills li.border {
+  border-right: 1px solid #ccc;
 }
 
-#header #borough-tabs {
+#header .outside-links.nav-pills a {
+  color: #364350;
+  background: none !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#header .outside-links.nav-pills a:hover {
+  color: #E87638;
+}
+
+#header #borough-tabs.nav-pills {
   margin-bottom: 0;
   position: absolute;
   top: 40px;
   right: 5px;
 }
 
-#header #borough-tabs li a:active,
-#header #borough-tabs li a.active {
+#header #borough-tabs.nav-pills li a:active,
+#header #borough-tabs.nav-pills li a.active {
   background-color: #364350;
   border-color: #364350;
   color: #fff;
@@ -139,16 +159,18 @@ html {
 
 .leaflet-center {
   padding-right: 300px;
-  width: 50%;
+  padding-left: 40px;
+  width: 60%;
   max-width: 900px;
 }
 
 #map .leaflet-control-geosearch {
-  width: 70%;
+  width: 60%;
 }
 
 #map .leaflet-control-geosearch input {
   margin: 0;
+  font-size: 1em;
 }
 
 #map #geocode {
@@ -167,6 +189,11 @@ html {
   position: absolute;
   bottom: 20px;
   left: 10px;
+}
+
+.leaflet-bottom.leaflet-right {
+  left: 0;
+  right: auto;
 }
 
 
@@ -350,14 +377,62 @@ h2 {
 
 /* Responsive mobile-only tweaks */
 @media (max-width: 600px) {
+  html {
+    font-family: mobile;
+  }
+
+  #header {
+    overflow: visible;
+    height: 50px;
+  }
+
+  #map {
+    top: 50px;
+  }
+
+  #header h1 {
+    margin: 5px;
+  }
 
   #header img {
-    max-width: 100%;
-    height: auto;
+    max-height: 40px;
+    width: auto;
+  }
+
+  #header .menu {
+    position: absolute;
+    z-index: 20;
+    background-color: #fff;
+    right: 0;
+    top: 50px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-right: none;
+  }
+
+  #header .menu .outside-links {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: .5em;
+    margin-bottom: 1em;
+  }
+
+  #header .menu .borough-tabs-title {
+    margin: 0 10px;
+  }
+
+  #header #show-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .borough-tabs-title,
+  #show-menu {
+    display: block;
   }
 
   #right-bar,
-  #borough-tabs,
+  .menu,
   .leaflet-control-geosearch {
     display: none;
   }
@@ -385,7 +460,6 @@ h2 {
   }
 
   .leaflet-center {
-    width: 40%;
     padding-right: 0;
   }
 
@@ -393,5 +467,16 @@ h2 {
     position: relative;
     left: 0;
     width: 300px;
+  }
+}
+
+/* iPad portrait */
+@media (max-width: 800px) {
+  .menu {
+    font-size: .85em;
+  }
+  #header img {
+    max-width: 270px;
+    height: auto;
   }
 }

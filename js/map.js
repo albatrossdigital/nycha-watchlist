@@ -123,7 +123,7 @@ this.map = L.mapbox.map('map', mapId, {
     scrollWheelZoom: false
   })
 this.map
-  .setView([40.79054951505782, -73.85164260864258], 12)
+  .setView([40.84030757074791, -73.90108108520506], 12)
   .addControl(L.mapbox.shareControl());
 
 // Add the geosearch control
@@ -188,7 +188,8 @@ function nextMarker(direction) {
 
 function showMarker() {
   if (setView == undefined || setView != false) {
-    map.setView(markers[currentMarker].getLatLng(), 14);
+    var latlon = markers[currentMarker].getLatLng();
+    map.setView(latlon, 14);
   }
   markers[currentMarker].openPopup();
 }

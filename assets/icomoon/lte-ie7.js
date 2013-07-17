@@ -10,7 +10,8 @@ window.onload = function() {
 			'icon-pause' : '&#xe001;',
 			'icon-chevron-right' : '&#xf054;',
 			'icon-chevron-left' : '&#xf053;',
-			'icon-map-marker' : '&#xf041;'
+			'icon-map-marker' : '&#xf041;',
+			'icon-reorder' : '&#xf0c9;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;

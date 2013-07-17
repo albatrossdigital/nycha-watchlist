@@ -11,6 +11,7 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script src="assets/L.GeoSearch/src/js/l.control.geosearch.js"></script>
 <script src="assets/L.GeoSearch/src/js/l.geosearch.provider.google.js"></script>
+<script src="assets/onmediaquery/onmediaquery.min.js"></script>
 <link href='http://api.tiles.mapbox.com/mapbox.js/v1.1.0/mapbox.css' rel='stylesheet' />
 <link href='assets/L.GeoSearch/src/css/l.geosearch.css' rel='stylesheet' />
 <link href='assets/icomoon/style.css' rel='stylesheet' />
@@ -23,20 +24,26 @@
 <div id="header">
   <h1 class="pull-left"><img src="images/logo.png" width="325" height="60" alt="NYCHA Watchlist - Tracking repairs in New York City public housing" ></h1>
   
-  <div class="outside-links">
-    <a href="http://advocate.nyc.gov/NYCHA/about">ABOUT THE WATCHLIST</a> |
-    <a href="http://advocate.nyc.gov/NYCHA/FAQ">FAQs ON REPAIRS</a> |
-    <a href="http://advocate.nyc.gov/NYCHA/help">GET HELP WITH REPAIRS</a>
+  <button class="btn" id="show-menu"><span class="icon-reorder"></span></button>
+
+  <div class="menu">
+    <ul class="outside-links nav nav-pills">
+      <li class="border"><a href="http://advocate.nyc.gov/NYCHA/about">ABOUT THE WATCHLIST</a></li>
+      <li class="border"><a href="http://advocate.nyc.gov/NYCHA/FAQ">FAQs ON REPAIRS</a></li>
+      <li><a href="http://advocate.nyc.gov/NYCHA/help">GET HELP WITH REPAIRS</a></li>
+    </ul>
+
+    <h5 class="borough-tabs-title">View buildings by borough</h5>
+    <ul class="nav nav-pills" id="borough-tabs">
+      <li><a href="#">All buildings</a></li>
+      <li><a href="#Bronx">Bronx</a></li>
+      <li><a href="#Brooklyn">Brooklyn</a></li>
+      <li><a href="#Manhattan">Manhattan</a></li>
+      <li><a href="#Queens">Queens</a></li>
+      <li><a href="#Staten Island">Staten Island</a></li>
+    </ul>
   </div>
 
-  <ul class="nav nav-pills" id="borough-tabs">
-    <li><a href="#">All buildings</a></li>
-    <li><a href="#Bronx">Bronx</a></li>
-    <li><a href="#Brooklyn">Brooklyn</a></li>
-    <li><a href="#Manhattan">Manhattan</a></li>
-    <li><a href="#Queens">Queens</a></li>
-    <li><a href="#Staten Island">Staten Island</a></li>
-  </ul>
 </div>
 
 <div id="right-bar">

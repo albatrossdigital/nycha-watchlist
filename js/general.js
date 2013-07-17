@@ -26,5 +26,24 @@ function setActiveBorough(borough) {
   title = (title == 'QUEENS') ? title + "'" : title + "'s";
   jQuery('#right-bar-location').text(title);
   fusionTables(mapTable, drawMarkers);
-  
 }
+
+// Responsive media queries for mobile menu
+var queries = [
+{
+  context: 'mobile',
+    match: function() {
+      jQuery('.outside-links, #borough-tabs').removeClass('nav-pills').addClass('nav-list');
+    },
+    unmatch: function() {
+      jQuery('.outside-links, #borough-tabs').addClass('nav-pills').removeClass('nav-list');
+      jQuery('.menu').show();
+    }
+}
+];
+MQ.init(queries);
+
+jQuery('#show-menu').bind('click', function() {
+  jQuery('.menu').slideToggle();
+  jQuery(this).toggleClass('active');
+})
