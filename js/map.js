@@ -179,7 +179,6 @@ function cycle() {
 }
 
 function nextMarker(direction) {
-  console.log(setView);
   currentMarker += direction;
   if (currentMarker > markers.length - 1) currentMarker = 0;
   if (currentMarker < 0) currentMarker = markers.length - 1;

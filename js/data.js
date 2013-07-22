@@ -79,106 +79,115 @@ jQuery('#hideData').bind('click', function() {
 
 
 function drawTable() {
-  var key = activeKey;
+  var keyVal = activeKey;
 
   // Prepare the data                      
   var query = "SELECT * FROM " + dataTable;
   //
   if (key != undefined) {
-    query += " WHERE "+keyCol+" = '" + key + "'";
+    query += " WHERE "+keyCol+" = '" + keyVal + "'";
   }
 
-  var queryText = encodeURIComponent(query);
-  var gvizQuery = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq=' + queryText);
-  // Apply query language statement.
-  //query.setQuery("SELECT A, B, D, G, H, I, J, L");
-  // Send the query with a callback function.
-  gvizQuery.send(handleQueryResponse);
-}
+  // enter  enter your google fusion tables api key below
+  //var query = "SELECT 'REPAIR CATEGORY', COUNT(), SUM('DAYS OUTSTANDING') FROM " + dataTable + " WHERE "+keyCol+" = '" + keyVal + "' GROUP BY 'REPAIR CATEGORY'";
+  var url = 'https://www.googleapis.com/fusiontables/v1/query';
+  var data = {'key': key, 'sql': query};
 
-function handleQueryResponse(response) {
+  $.ajax({
+    url: url,
+    data: data,
+    dataType: 'jsonp',
+    jsonpCallback: 'jsonp',
+    success: response,
+    error: response
+  });
 
-  if (response.isError()) {
-    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-    return;
+  
+  function response(x) {
+
+    var data = new google.visualization.DataTable();
+
+    _.each(x.columns, function(colName) {
+      var type = (colName == 'DATE REPORTED') ? 'date' : (colName == 'DAYS OUTSTANDING') ? 'number' : 'string';
+      data.addColumn(type, colName);
+    })
+    for (var i = 0; i < x.rows.length; i++) {
+      x.rows[i][6] = new Date(x.rows[i][6]);
+      x.rows[i][7] = parseInt(x.rows[i][7]);
+    }
+    data.addRows(x.rows);
+
+    var daysPicker = new google.visualization.ControlWrapper({
+      'controlType': 'NumberRangeFilter',
+      'containerId': 'daysControl',
+      'options': {
+        'filterColumnLabel': 'DAYS OUTSTANDING',
+        'ui': {
+        'labelStacking': 'vertical',
+          'allowTyping': false,
+          'allowMultiple': false
+        }
+      }
+    }); 
+
+    var categoryPicker = new google.visualization.ControlWrapper({
+      'controlType': 'CategoryFilter',
+      'containerId': 'categoryControl',
+      'options': {
+        'filterColumnLabel': 'REPAIR CATEGORY',
+        'ui': {
+        'labelStacking': 'vertical',
+          'allowTyping': false,
+          'allowMultiple': true
+        }
+      }
+    });
+
+    var detailPicker = new google.visualization.ControlWrapper({
+      'controlType': 'StringFilter',
+      'containerId': 'detailControl',
+      'options': {
+        'filterColumnLabel': 'ITEM DETAIL',
+        'ui': {
+        'labelStacking': 'vertical',
+          'allowTyping': true
+        }
+      }
+    });
+
+    // Define a Table
+    var dataChart = new google.visualization.ChartWrapper({
+      'chartType': 'Table',
+      'containerId': 'dashboardData',
+      'options': {
+        //'height': 630,
+        //'width': window.innerWidth -68,
+        'page': 'enable',
+        'pageSize': 25,
+        'alternatingRowStyle': true,
+        'sortColumn': 7,
+        'sortAscending': false,
+        'cssClassNames': {headerRow: 'table-header-background', tableRow: 'table-row', oddTableRow: 'odd-table-row', selectedTableRow: 'google-hover-table-row', hoverTableRow: 'google-hover-table-row', headerCell: 'table-header-background', tableCell: '', rowNumberCell: ''}
+      },
+      //'view': {'columns': [0, 1]}
+    });
+
+    // Create a dashboard
+    new google.visualization.Dashboard(document.getElementById('dashboard')).
+      bind(daysPicker, dataChart).
+      bind(categoryPicker, dataChart).
+      bind(detailPicker, dataChart).
+      draw(data);
+
   }
-
-  var data = response.getDataTable();  
-  console.log(data);
-
-
-
-  var daysPicker = new google.visualization.ControlWrapper({
-    'controlType': 'NumberRangeFilter',
-    'containerId': 'daysControl',
-    'options': {
-      'filterColumnLabel': 'DAYS OUTSTANDING',
-      'ui': {
-      'labelStacking': 'vertical',
-        'allowTyping': false,
-        'allowMultiple': false
-      }
-    }
-  }); 
-
-  var categoryPicker = new google.visualization.ControlWrapper({
-    'controlType': 'CategoryFilter',
-    'containerId': 'categoryControl',
-    'options': {
-      'filterColumnLabel': 'REPAIR CATEGORY',
-      'ui': {
-      'labelStacking': 'vertical',
-        'allowTyping': false,
-        'allowMultiple': true
-      }
-    }
-  });
-
-  var detailPicker = new google.visualization.ControlWrapper({
-    'controlType': 'StringFilter',
-    'containerId': 'detailControl',
-    'options': {
-      'filterColumnLabel': 'ITEM DETAIL',
-      'ui': {
-      'labelStacking': 'vertical',
-        'allowTyping': true
-      }
-    }
-  });
-
-  // Define a Table
-  var dataChart = new google.visualization.ChartWrapper({
-    'chartType': 'Table',
-    'containerId': 'dashboardData',
-    'options': {
-      //'height': 630,
-      //'width': window.innerWidth -68,
-      'page': 'enable',
-      'pageSize': 25,
-      'alternatingRowStyle': true,
-      'sortColumn': 7,
-      'sortAscending': false,
-      'cssClassNames': {headerRow: 'table-header-background', tableRow: 'table-row', oddTableRow: 'odd-table-row', selectedTableRow: 'google-hover-table-row', hoverTableRow: 'google-hover-table-row', headerCell: 'table-header-background', tableCell: '', rowNumberCell: ''}
-    },
-    //'view': {'columns': [0, 1]}
-  });
-
-  // Create a dashboard
-  new google.visualization.Dashboard(document.getElementById('dashboard')).
-    bind(daysPicker, dataChart).
-    bind(categoryPicker, dataChart).
-    bind(detailPicker, dataChart).
-    draw(data);
 
 }
 
 
 
 function drawPie(keyValue) {
-  console.log('draw');
 
   function response(x) {
-    console.log(x);
     if (!x || !x.rows) return [];
     var category = [['', '']];
     var outstanding = [['Category'], ['']];
@@ -239,48 +248,3 @@ function drawPie(keyValue) {
 
 }
 
-
-//google.setOnLoadCallback(drawData);
-
-/*
-
-google.load('visualization', '1', { packages: ['table', 'controls'] });
-
-function drawTable() {
-  var query = "SELECT development_name, number FROM " + dataTable;
-  /*var team = document.getElementById('team').value;
-  if (team) {
-    query += " WHERE 'Scoring Team' = '" + team + "'";
-  }
-  console.log(query);
-  var queryText = encodeURIComponent(query);
-  var gvizQuery = new google.visualization.Query(
-      'http://www.google.com/fusiontables/gvizdata?tq=' + queryText);
-
-  gvizQuery.send(function(response) {
-    var table = new google.visualization.Table(document.getElementById('data'));
-    table.draw(response.getDataTable(), {
-      showRowNumber: true
-    });
-  });
-
-  // Define a slider control for the 'Donuts eaten' column
-  var yearPicker = new google.visualization.ControlWrapper({
-    'controlType': 'NumberRangeFilter',
-    'containerId': 'yearControl',
-    'options': {
-      'filterColumnLabel': 'Year Built',
-      'ui': {
-        'labelStacking': 'vertical',
-        'allowTyping': false,
-        'allowMultiple': false
-      }
-    }
-  });
-}
-
-
-
-
-
-google.setOnLoadCallback(drawTable);*/
