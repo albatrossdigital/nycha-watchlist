@@ -1,4 +1,13 @@
 var activeBorough;
+var filter = '';
+
+// Look and see if we need to limit queries
+/*if (window.location.search) {
+  var querystring = window.location.search.replace('?', '');
+  if (isNumeric(querysring)) {
+    filter = ''
+  }
+}*/
 
 
 // Draw initial markers
