@@ -111,8 +111,10 @@ function drawTable() {
       var type = (colName == 'DATE REPORTED') ? 'date' : (colName == 'DAYS OUTSTANDING') ? 'number' : 'string';
       data.addColumn(type, colName);
     })
+    var compareDate = new Date(1950, 1, 1);
     for (var i = 0; i < x.rows.length; i++) {
       x.rows[i][6] = new Date(x.rows[i][6]);
+      x.rows[i][6] = x.rows[i][6] < compareDate ? new Date(x.rows[i][6].setFullYear(x.rows[i][6].getFullYear() + 100)) : x.rows[i][6];
       x.rows[i][7] = parseInt(x.rows[i][7]);
     }
     data.addRows(x.rows);
