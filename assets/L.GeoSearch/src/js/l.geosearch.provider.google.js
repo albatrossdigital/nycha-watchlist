@@ -26,7 +26,7 @@ L.GeoSearch.Provider.Google = L.Class.extend({
         var geocoder = L.GeoSearch.Provider.Google.Geocoder;
         
         var parameters = L.Util.extend({
-            address: qry
+            address: qry + 'New York'
         }, this.options);
 
         var results = geocoder.geocode(parameters, function(data){
