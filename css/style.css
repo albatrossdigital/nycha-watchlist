@@ -105,12 +105,14 @@ html {
   -moz-opacity: .9;
   height: 100%;
   clear: both;
+  overflow-y: scroll;
 }
 
 #right-bar  #building-list .item {
   padding: .75em 5px .75em 100px;
   cursor: hand; 
   cursor: pointer;
+  position: relative;
 }
 
 #right-bar  #building-list .highlighted {

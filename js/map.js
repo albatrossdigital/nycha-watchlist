@@ -3,7 +3,7 @@
 var key = "AIzaSyBkpY07SAQb2K0qZIFBsoPy9E4EIWH4DE8";
 
 // Fusion tables table
-var mapTable = '1i9RyaduL6-eh9MC5dq1e49-4MN1bvHG8hX0bt4A';
+var mapTable = '1ALaV2WDoDmN5k6U1FVZn2BkeEd9XaiR9w59mh5Y';
 
 // Mapbox map id
 var mapId = 'albatrossdigital.map-yaq188c8';

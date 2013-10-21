@@ -1,5 +1,5 @@
 // Fusion Tables table id
-var dataTable = '11oQHFLEPdtG3ibEaHJM_wrCO6OHSTeg0x5lH0FA';
+var dataTable = '1hJrbnJVLKd6FnVABrp7r8zyzoUkq3nuM-j8lRgE';
 
 // This is the Fusion Tables column that all of the lookups from the map are keyed on
 var keyCol = "'DEVELOPMENT NAME'"
@@ -113,9 +113,11 @@ function drawTable() {
     })
     var compareDate = new Date(1950, 1, 1);
     for (var i = 0; i < x.rows.length; i++) {
-      x.rows[i][6] = new Date(x.rows[i][6]);
-      x.rows[i][6] = x.rows[i][6] < compareDate ? new Date(x.rows[i][6].setFullYear(x.rows[i][6].getFullYear() + 100)) : x.rows[i][6];
-      x.rows[i][7] = parseInt(x.rows[i][7]);
+      console.log(x.rows[i][5]);
+      x.rows[i][5] = new Date(x.rows[i][5]);
+      console.log(x.rows[i][5]);
+      x.rows[i][5] = x.rows[i][5] < compareDate ? new Date(x.rows[i][5].setFullYear(x.rows[i][5].getFullYear() + 100)) : x.rows[i][5];
+      x.rows[i][6] = parseInt(x.rows[i][6]);
     }
     data.addRows(x.rows);
 
@@ -167,7 +169,7 @@ function drawTable() {
         'page': 'enable',
         'pageSize': 25,
         'alternatingRowStyle': true,
-        'sortColumn': 7,
+        'sortColumn': 6,
         'sortAscending': false,
         'cssClassNames': {headerRow: 'table-header-background', tableRow: 'table-row', oddTableRow: 'odd-table-row', selectedTableRow: 'google-hover-table-row', hoverTableRow: 'google-hover-table-row', headerCell: 'table-header-background', tableCell: '', rowNumberCell: ''}
       },
