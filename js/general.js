@@ -1,4 +1,5 @@
 var activeBorough;
+var activeCategory;
 var filter = '';
 
 // Look and see if we need to limit queries
@@ -24,6 +25,7 @@ jQuery('#borough-tabs li a').bind('click', function(){
 
 function setActiveBorough(borough) {
   activeBorough = borough.toUpperCase();
+  activeCategory = jQuery('#category').val();
   jQuery('#borough-tabs li a').removeClass('active');
   jQuery('#borough-tabs li a[href="#'+ borough +'"]').addClass('active');
   _.each(markers, function(marker, index) {
@@ -36,6 +38,11 @@ function setActiveBorough(borough) {
   jQuery('#right-bar-location').text(title);
   fusionTables(mapTable, drawMarkers);
 }
+
+jQuery('#category').bind('change', function(){
+  setActiveBorough(activeBorough);
+})
+
 
 // Add AD attribution
 jQuery('<span>Built by <a href="http://albatrossdigital.com" title="Albatross Digital">Albatross Digital</a> | </span>').prependTo('.leaflet-control-attribution')

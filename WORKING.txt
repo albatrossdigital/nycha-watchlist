@@ -6,9 +6,10 @@ create table repairs (borough varchar(50), development_name varchar(50), street_
 LOAD DATA INFILE "/repairs.csv" INTO TABLE repairs FIELDS TERMINATED BY "," enclosed by '"' (borough, development_name, street_address, repair_category, item_detail, date_reported, days_outstanding);
 delete from repairs where repair_category = 'REPAIR CATEGORY';
 
-create table buildings (development_name varchar(50), street_address varchar(50), borough varchar(50), full_address varchar(50), total int(13), avg_days float(13));
-insert into buildings (development_name, street_address, borough, full_address, total, avg_days)
-SELECT development_name, street_address, borough, full_address, count(*), SUM(days_outstanding)/count(*)  FROM `repairs` group by development_name;
+drop table if exists buildings;
+create table buildings (development_name varchar(50), street_address varchar(50), borough varchar(50), full_address varchar(50), total int(13), avg_days float(13), total_old int(13), avg_days_old float(13), categories varchar(255));
+insert into buildings (development_name, street_address, borough, full_address, total, avg_days, categories)
+SELECT development_name, street_address, borough, full_address, count(*), SUM(days_outstanding)/count(*), GROUP_CONCAT(repair_category SEPARATOR '; ') FROM `repairs` group by development_name;
 
 create table categories (repair_category varchar(50), total int(13), avg_days float(13));
 insert into categories (repair_category, total, avg_days)
@@ -17,6 +18,16 @@ SELECT repair_category, count(*), SUM(days_outstanding)/count(*)  FROM `repairs`
 create table boroughs (borough varchar(50), total int(13), avg_days float(13));
 insert into boroughs (borough, total, avg_days)
 SELECT borough, count(*), SUM(days_outstanding)/count(*)  FROM `repairs` group by borough;
+
+
+
+# load in previous year's data
+create table buildings_old (development_name varchar(50), street_address varchar(50), borough varchar(50), full_address varchar(50), total int(13), avg_days float(13));
+LOAD DATA INFILE "/buildings.csv" INTO TABLE buildings_old FIELDS TERMINATED BY "," enclosed by '"' (development_name, street_address, borough, full_address, total, avg_days);
+delete from buildings_old where development_name = 'REPAIR development_name';
+
+update buildings a set total_old = (select total from buildings_old b where a.full_address = b.full_address),
+  avg_days_old = (select avg_days from buildings_old b where a.full_address = b.full_address);
 
 
 

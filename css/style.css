@@ -50,6 +50,16 @@ html {
   color: #E87638;
 }
 
+#header label {
+  float: left;
+  line-height: 30px;
+  margin-right: 5px;
+}
+
+#header form {
+  margin-right: 10px;
+}
+
 #header #borough-tabs.nav-pills {
   margin-bottom: 0;
   position: absolute;
@@ -310,7 +320,7 @@ h2 {
 
 .popupWrapper .item {
   border-bottom: 2px solid #d7d7d7;
-  padding: 15px 1em 0;
+  padding: 5px 1em 10px;
 }
 
 .popupWrapper .dataItem {
@@ -368,10 +378,31 @@ h2 {
   padding-left: 10px;
 }
 
+.popupWrapper .dataTitle span {
+  display: block;
+  font-size: .7em;
+  line-height: 1.2em;
+}
+
 .popupWrapper .dataValue {
   font-weight: bold;
   font-size: 2em;
   line-height: 1em;
+  margin-top: -5px;
+}
+
+.popupWrapper .dataValue .deltaDataValue{
+  display: block;
+  font-size: .5em;
+  margin-top: -3px;
+}
+
+.popupWrapper .dataValue .deltaDataValue .red{
+  color: #B50000;
+}
+
+.popupWrapper .dataValue .deltaDataValue .green{
+  color: #169B00;
 }
 
 .popupWrapper .dataValue.highlighted {
@@ -438,7 +469,8 @@ h2 {
 
   #right-bar,
   .menu,
-  .leaflet-control-geosearch {
+  .leaflet-control-geosearch,
+  #header form {
     display: none;
   }
 
@@ -487,5 +519,13 @@ h2 {
   #header img {
     max-width: 270px;
     height: auto;
+  }
+
+}
+
+/* iPad portrait */
+@media (max-width: 1200px) {
+  #header form {
+    display: none;
   }
 }

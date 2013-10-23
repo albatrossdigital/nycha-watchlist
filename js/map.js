@@ -3,7 +3,7 @@
 var key = "AIzaSyBkpY07SAQb2K0qZIFBsoPy9E4EIWH4DE8";
 
 // Fusion tables table
-var mapTable = '1ALaV2WDoDmN5k6U1FVZn2BkeEd9XaiR9w59mh5Y';
+var mapTable = '1C5qqPDzBTopul-dZVTdwCv4JpHrGZTp2pJrEsg8';
 
 // Mapbox map id
 var mapId = 'albatrossdigital.map-yaq188c8';
@@ -22,7 +22,11 @@ function fusionTables(id, callback) {
   }
   // enter  enter your google fusion tables api key below
   
-  var query = 'SELECT development_name, geo_latitude, geo_longitude, street_address, borough, total, avg_days FROM '+ id +' ORDER BY total DESC';
+  var query = 'SELECT development_name, geo_latitude, geo_longitude, street_address, borough, total, avg_days, total_old, avg_days_old FROM '+ id;
+  if (activeCategory != undefined && activeCategory != '') {
+    query += " WHERE categories CONTAINS '" + activeCategory + "'";
+  }
+  query += ' ORDER BY total DESC';
   var url = 'https://www.googleapis.com/fusiontables/v1/query?sql='+encodeURIComponent(query)+'&key=' + key + '&typed=false&callback=jsonp';
 
   $.ajax({
@@ -45,11 +49,15 @@ var drawMarkers = function(newData) {
   for (var i = 0; i < data.rows.length; i++) {
     var entry = data.rows[i];
     if (activeBorough == undefined || activeBorough == 'All' || activeBorough == '' || activeBorough == entry[4]) {
+      var deltaTotal = entry[5] - entry[7];
+      deltaTotal = deltaTotal >= 0 ? '<span class="green">+' + deltaTotal +"</span>" : '<span class="red">' + deltaTotal +"</span>";
+      var deltaAvg = parseInt(entry[6] - entry[8]);
+      deltaAvg = deltaAvg >= 0 ? '<span class="green">+' + deltaAvg +"</span>" : '<span class="red">' + deltaAvg +"</span>";
       var description = '<div class="popupWrapper" onclick="showData();stopCycle();">'
         + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(j+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small btn-primary pull-right" id="showData">See Details</button></div>'
         + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+encodeURIComponent(entry[3]+','+entry[4])+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
-        + '<div class="item dataItem"><span class="dataTitle">Total Outstanding Requests:</span> <span class="dataValue highlighted">' + entry[5] + '</span></div>'
-        + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding:</span> <span class="dataValue">' + parseInt(entry[6]) + '</span></div>'
+        + '<div class="item dataItem"><span class="dataTitle">Total Outstanding Requests: <span>Change since 2012</span></span> <span class="dataValue highlighted">' + entry[5] + '<span class="deltaDataValue">' + deltaTotal + '</span></span></div>'
+        + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding: <span>Change since 2012</span></span> <span class="dataValue">' + parseInt(entry[6]) + '<span class="deltaDataValue">' + deltaAvg + '</span></span></div>'
         + '</div>';
       var size = Math.round(entry[5]/200) + 5;
 
