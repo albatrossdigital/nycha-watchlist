@@ -113,9 +113,7 @@ function drawTable() {
     })
     var compareDate = new Date(1950, 1, 1);
     for (var i = 0; i < x.rows.length; i++) {
-      console.log(x.rows[i][5]);
       x.rows[i][5] = new Date(x.rows[i][5]);
-      console.log(x.rows[i][5]);
       x.rows[i][5] = x.rows[i][5] < compareDate ? new Date(x.rows[i][5].setFullYear(x.rows[i][5].getFullYear() + 100)) : x.rows[i][5];
       x.rows[i][6] = parseInt(x.rows[i][6]);
     }
