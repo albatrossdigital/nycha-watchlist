@@ -36,6 +36,7 @@ function setActiveBorough(borough) {
   var title = (activeBorough == '') ? "NYC" : (activeBorough == 'BRONX') ? 'THE BRONX' : activeBorough;
   title = (title == 'QUEENS') ? title + "'" : title + "'s";
   jQuery('#right-bar-location').text(title);
+  jQuery('#right-bar-category').text(activeCategory == '' ? 'All repair categories' : 'Filtered by ' + activeCategory.toLowerCase() + ' repairs');
   fusionTables(mapTable, drawMarkers);
 }
 

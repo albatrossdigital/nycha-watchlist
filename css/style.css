@@ -10,6 +10,10 @@ html {
   background-color: #364350;
 }
 
+button {
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .borough-tabs-title,
 #show-menu {
   display: none;
@@ -20,6 +24,12 @@ html {
   overflow: hidden;
   position: relative;
   background-color: #fff;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.1em;
+}
+
+#header select {
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #header h1 {
@@ -27,7 +37,7 @@ html {
 }
 
 #header .outside-links.nav-pills {
-  top: 5px;
+  top: 10px;
   right: 5px;
   position: absolute;
   color: #ccc;
@@ -58,6 +68,7 @@ html {
 
 #header form {
   margin-right: 10px;
+  margin-top: 2px;
 }
 
 #header #borough-tabs.nav-pills {
@@ -90,10 +101,22 @@ html {
   background-color: #2B353F;
 }
 
-#right-bar  h2{
-  padding: .75em 0;
+#right-bar h2{
+  padding: .75em 0 0;
   text-align: center;
   color: #fff;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#right-bar #right-bar-category {
+  font-family: "ff-meta-web-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-style: italic;
+  text-align: center;
+  font-style: italic;
+  text-align: center;
+  font-weight: normal;
+  font-size: 1.1em;
+  margin-top: 5px;
 }
 
 #right-bar .building-list-heading {
@@ -107,6 +130,8 @@ html {
   width: 80px;
   display: block;
   float: left;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.1em;
 }
 
 #right-bar #building-list {
@@ -120,6 +145,8 @@ html {
 
 #right-bar  #building-list .item {
   padding: .75em 5px .75em 100px;
+  font-family: "ff-meta-web-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.1em;
   cursor: hand; 
   cursor: pointer;
   position: relative;
@@ -132,6 +159,7 @@ html {
   color: #FE7E38;
   position: absolute;
   margin-top: 5px;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #right-bar  #building-list .item.active {
@@ -220,6 +248,7 @@ h2 {
   margin: 0;
   color: #364350;
   text-transform: uppercase;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #data {
@@ -325,16 +354,20 @@ h2 {
 
 .popupWrapper .dataItem {
   height: 45px;
+  font-family: "ff-meta-web-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  line-height: 1.2em;
 }
 
 .popupWrapper .addressWrapper {
+  font-family: "ff-meta-web-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1.1em;
   background-color: #EBEBEB;
   color: #364350;
   padding-bottom: 15px;
 }
 
 .popupWrapper .addressWrapper .ranking{
-  font-size: 3em;
+  font-size: 2.8em;
   line-height: .8em;
   color: #A5A5A5;
   font-weight: bold;
@@ -357,6 +390,7 @@ h2 {
   background-repeat: repeat-x;
   border-color: #2B353F #2B353F #364350;
   border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+  font-size: .8em;
 }
 
 
@@ -382,6 +416,7 @@ h2 {
   display: block;
   font-size: .7em;
   line-height: 1.2em;
+  margin-top: 3px;
 }
 
 .popupWrapper .dataValue {
@@ -389,6 +424,7 @@ h2 {
   font-size: 2em;
   line-height: 1em;
   margin-top: -5px;
+  font-family: "myriad-pro","Helvetica Neue",Helvetica,Arial,sans-serif !important;
 }
 
 .popupWrapper .dataValue .deltaDataValue{

@@ -3,7 +3,7 @@
 var key = "AIzaSyBkpY07SAQb2K0qZIFBsoPy9E4EIWH4DE8";
 
 // Fusion tables table
-var mapTable = '13wHevcAH6iyrQ3diPE6poXK7XXaR_US0MTfXN4w';
+var mapTable = '1iN1T8x_WjDqWMcBpsaRpAjMhfOUovvQR7XDT5C8';
 
 // Mapbox map id
 var mapId = 'albatrossdigital.map-yaq188c8';
@@ -43,21 +43,22 @@ var drawMarkers = function(newData) {
   
   var j = 0;
   jQuery('#building-list').html('');
+  var scaler = (activeCategory == 'undefined' || activeCategory == '') ? scaler = 150 : scaler = 40;
   for (var i = 0; i < data.rows.length; i++) {
     var entry = data.rows[i];
     if (activeBorough == undefined || activeBorough == 'All' || activeBorough == '' || activeBorough == entry[4]) {
       var deltaTotal = entry[5] - entry[7];
       var totalText = (activeCategory == undefined || activeCategory == '') ? 'Total' : '';
-      deltaTotal = deltaTotal >= 0 ? '<span class="red"><span class="icon icon-arrow-up"></span>' + deltaTotal +"</span>" : '<span class="green"><span class="icon icon-arrow-down"></span>' + Math.abs(deltaTotal) +"</span>";
+      deltaTotal = deltaTotal > 0 ? '<span class="red"><span class="icon icon-arrow-up"></span>' + deltaTotal +"</span>" : '<span class="green"><span class="icon icon-arrow-down"></span>' + Math.abs(deltaTotal) +"</span>";
       var deltaAvg = parseInt(entry[6] - entry[8]);
       deltaAvg = deltaAvg >= 0 ? '<span class="red"><span class="icon icon-arrow-up"></span>' + deltaAvg +"</span>" : '<span class="green"><span class="icon icon-arrow-down"></span>' + Math.abs(deltaAvg) +"</span>";
       var description = '<div class="popupWrapper" onclick="showData();stopCycle();">'
         + '<div class="item addressWrapper"><div class="ranking pull-right"><span>#</span>'+(j+1)+'</div><h2>'+entry[0]+'</h2>'+entry[3]+'<br/>'+entry[4]+'<button class="btn btn-small btn-primary pull-right" id="showData">See Details</button></div>'
         + '<div class="imageWrapper pull-left"><img src="http://maps.googleapis.com/maps/api/streetview?size=150x122&location='+encodeURIComponent(entry[3]+','+entry[4])+'&sensor=false" height="122" width="150" alt="Google StreetView Image @copy Google" /></div>'
-        + '<div class="item dataItem"><span class="dataTitle">'+ totalText +' Outstanding Requests: <span>Change since 2012</span></span> <span class="dataValue highlighted">' + entry[5] + '<span class="deltaDataValue">' + deltaTotal + '</span></span></div>'
-        + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding: <span>Change since 2012</span></span> <span class="dataValue">' + parseInt(entry[6]) + '<span class="deltaDataValue">' + deltaAvg + '</span></span></div>'
+        + '<div class="item dataItem"><span class="dataTitle">'+ totalText +' Outstanding Requests: <span>Change since 2/15/13</span></span> <span class="dataValue highlighted">' + entry[5] + '<span class="deltaDataValue">' + deltaTotal + '</span></span></div>'
+        + '<div class="item dataItem daysWrapper"><span class="dataTitle">Average Days Outstanding: <span>Change since 2/15/13</span></span> <span class="dataValue">' + parseInt(entry[6]) + '<span class="deltaDataValue">' + deltaAvg + '</span></span></div>'
         + '</div>';
-      var size = Math.round(entry[5]/200) + 5;
+      var size = Math.round(entry[5]/scaler) + 5;
 
       var marker = L.marker(new L.LatLng(parseFloat(entry[1]), parseFloat(entry[2])), {
         icon: L.icon({
